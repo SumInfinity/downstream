@@ -1,0 +1,105 @@
+<!-- Page Header -->
+<div class="col-lg-12" [style.backgroundImage]="'url('+ post.media +')'">
+  <header style="padding-top:100px;" class="masthead jumbotron clear-black">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{post.title}}</h1>
+            <span class="meta">Posted by
+                <a href="#">{{post.author}}</a>
+                on {{ post.date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+
+
+<div class="container clear-blue">
+  <ul class="breadcrumb col-lg-12 transparent-bg white-font">
+    <li><a href="/">Home</a></li>
+    <li><a href="blog">Blog</a></li>
+    <li class="active">{{post.title}}</li>
+  </ul>
+
+  <div class="ssk-group ssk-count ssk-sticky ssk-left ssk-center ssk-lg">
+    <a href="" class="ssk ssk-facebook"></a>
+    <a href="" class="ssk ssk-twitter"></a>
+    <a href="" class="ssk ssk-google-plus"></a>
+    <a href="" class="ssk ssk-pinterest"></a>
+    <a href="" class="ssk ssk-linkedin"></a>
+  </div>
+</div>
+<hr/>
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <p [innerHTML]="post.content"></p>
+
+        <h1>Comments </h1>
+        <ul class="comment-section">
+
+          <li *ngFor="let comment of comments" class="comment user-comment">
+
+            <div class="info">
+              <a href="#">{{comment.comment_author}}</a>
+              <span>{{comment.comment_date}}</span>
+            </div>
+
+            <a class="avatar" href="#">
+              <img src="http://pikmail.herokuapp.com/{{comment.comment_author_email}}?size=50" width="35" alt="Profile Avatar" title="{{comment.comment_author}}" />
+            </a>
+
+            <p>{{comment.comment_content}}</p>
+
+          </li>
+
+          <!--<li class="comment author-comment">-->
+
+          <!--<div class="info">-->
+          <!--<a href="#">Jack Smith</a>-->
+          <!--<span>3 hours ago</span>-->
+          <!--</div>-->
+
+          <!--<a class="avatar" href="#">-->
+          <!--<img src="images/avatar_author.jpg" width="35" alt="Profile Avatar" title="Jack Smith" />-->
+          <!--</a>-->
+
+          <!--<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse gravida sem sit amet molestie portitor.</p>-->
+
+          <!--</li>-->
+
+          <li class="write-new">
+
+            <form action="#" method="post">
+
+              <textarea placeholder="Write your comment here" ng-model="comment.comment_content" name="comment"></textarea>
+              <input class="form-control transparent-bg white-font" ng-model="comment.comment_author" placeholder="Name"/>
+              <input class="form-control transparent-bg white-font" ng-model="comment.comment_author_email" type="email" placeholder="Your email"/>
+              <input class="form-control transparent-bg white-font" ng-model="comment.comment_author_url" type="url" placeholder="Website Link"/>
+              <div>
+                <img src="images/icons/002-man-1.svg" width="35" alt="icon of commenting user" title="User icon" />
+                <button ng-click="createComment($event)" type="submit">Submit</button>
+              </div>
+
+            </form>
+
+          </li>
+
+        </ul>
+
+
+      </div>
+      <app-sidebar class="container right col-md-4"></app-sidebar>
+
+    </div>
+
+
+  </div>
+</article>
+
+<hr>

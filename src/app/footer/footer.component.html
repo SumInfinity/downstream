@@ -1,0 +1,79 @@
+<footer id="footer" class="bg-footer col-lg-12">
+  <div class="row text-center">
+    <div class="col-md-3 white-font">
+      <H4><img src="assets/blue_dsv_logo.png" class="img-responsive footer-img" style="display:inline;color: rgb(172,132,54);"
+               alt="downstreamview logo"></H4>
+      <p>...all about the downstream sector</p>
+    </div>
+    <div class="col-md-3 white-font">
+      <ul class="footer-li">
+        <li class="first-line">NAVIGATION</li>
+        <li><a href="/">HOME</a></li>
+        <li><a href="aboutus ">ABOUT US</a></li>
+        <li><a href="blog ">BLOG</a></li>
+        <li><a href="contactus ">CONTACT US</a></li>
+      </ul>
+    </div>
+    <div class="col-md-3 white-font">
+      <hr class="sr-only"/>
+      <ul class="footer-li">
+        <li class="first-line">CALL US</li>
+        <li>+234 809 437 7333</li>
+        <li>+234 803 779 8082</li>
+      </ul>
+      <div class="container-fluid no-pad">
+        <ul class="footer-li">
+          <li class="first-line"> FOLLOW US</li>
+          <li>
+            <div class="footer-social row">
+              <a href="#footer" class="col-xs-2 semi-transparent" onclick="socialClickOp('https://facebook.com/downstreamview')" >
+                <img src="assets/icons/021-facebook.svg" class="" alt="facebook icon">
+              </a>
+              <a href="#footer" class="col-xs-2 semi-transparent" onclick="socialClickOp('https://twitter.com/downstreamview')" >
+                <img src="assets/icons/020-twitter.svg" class="" alt="twitter icon">
+              </a>
+              <a href="#footer" class="col-xs-2 semi-transparent" onclick="socialClickOp('https://instagram.com/')">
+                <img src="assets/icons/022-instagram.svg" class="" alt="instagram icon">
+              </a>
+              <a href="#footer" class="col-xs-2 semi-transparent" onclick="socialClickOp('https://www.youtube.com/channel/')">
+                <img src="assets/icons/019-youtube.svg" class="" alt="youtube icon">
+              </a>
+            </div>
+          </li>
+          <li><a href="mailto:downstreamview@gmail.com">email: downstreamview@gmail.com</a></li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="col-md-3 white-font">
+      <ul class="footer-li">
+        <li class="first-line">SUBSCRIBE</li>
+        <li>
+
+          <form id="feedbackForm" action="" method="post" ng-init="subscriber={}">
+            <div class="form-group">
+              <label for="fullname">Full Name</label>
+              <input id="fullname" name="fullname" class="form-control transparent-bg white-font" style="border: 2px solid;" ng-model="subscriber.name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email address:</label>
+              <input id="email" name="email" class="form-control transparent-bg white-font" style="border: 2px solid;" type="email" ng-model="subscriber.email"/>
+            </div>
+            <button ng-click="addSubscriber($event,subscriber)" class="btn btn-default btn-sm">Submit</button>
+            <div>
+              <input type="hidden" name="_csrf" value="917b3a98-d143-43d8-b054-b5347861d4e9" />
+            </div>
+          </form>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+  <div class="container-fluid">
+      <div class="text-center white-font no-bottom-margin bottom-foot">
+        <hr/>
+        <p class="no-bottom-margin text-center"> <small>All rights reserved <span class="white-font"> downstreamview &copy 2017 </span></small></p>
+      </div>
+    </div>
+
+</footer>

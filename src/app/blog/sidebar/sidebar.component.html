@@ -1,0 +1,12 @@
+<!-- blog content here -->
+<h3 class="text-center centered-content"><a href="blog"> Blog</a></h3>
+
+<div *ngFor="let post of posts" class="hover-father">
+  <div class="col-lg-8 center-block">
+    <h2 class="clear-white blog-header"><a routerLink="blog/{{post.slug}}" class="center-block">{{post.title}}</a></h2>
+    <div class="fixed-height">
+      <p class="show-hover clear-blue blog-small">{{post.excerpt}}</p>
+      <img src="{{post.media}}" style="width: 100%" class="img-responsive semi-transparent hide-hover">
+    </div>
+  </div>
+</div>

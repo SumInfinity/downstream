@@ -1,0 +1,237 @@
+<div ng-view="" class="row" id="container">
+  <section class="col-md-12" style="margin-top: 150px">
+<h2>Depot Prices of {{depotView}}</h2>
+  <mat-tab-group class="demo-tab-group">
+    <mat-tab label="Tab 2">
+      <ng-template mat-tab-label>
+        <div class="fill" matTooltip="Petrol prices" (click)="switchDepotView('pms')">PMS</div>
+      </ng-template>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+        <tr ng-init="DPOOrder='sort_order'">
+          <th class="logo"></th>
+          <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+          <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+          <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+          <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+          <th class="price_change_percent">+/- %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of depotCompanies | async">
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname"><input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font"/></td>
+          <td class="short">{{company.short_name}}</td>
+          <td class="price"><input [(ngModel)]="company.price" type="number" class="form-control transparent-bg white-font"/></td>
+          <td class="action-button"><img (click)="update(company)" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+          <td class="action-button"><img (click)="remove(company)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+        </tr>
+        <tr>
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg"/></td>
+          <td class="short">{{newCompany.short_name}}</td>
+          <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg"/></td>
+          <td class="action-button"><img (click)="saveCompany(newCompany, 'pms', 'depot')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+          <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+        </tr>
+
+        </tbody>
+      </table>
+
+    </mat-tab>
+    <mat-tab label="Tab 2">
+      <ng-template mat-tab-label>
+        <div class="fill" matTooltip="Diesel prices" (click)="switchDepotView('ago')">AGO</div>
+      </ng-template>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+        <tr ng-init="DPOOrder='sort_order'">
+          <th class="logo"></th>
+          <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+          <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+          <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+          <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+          <th class="price_change_percent">+/- %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of depotCompanies | async">
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname"><input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font"/></td>
+          <td class="short">{{company.short_name}}</td>
+          <td class="price"><input [(ngModel)]="company.price" type="number" class="form-control transparent-bg white-font"/></td>
+          <td class="action-button"><img (click)="update(company)" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+          <td class="action-button"><img (click)="remove(company)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+        </tr>
+        <tr>
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg"/></td>
+          <td class="short">{{newCompany.short_name}}</td>
+          <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg"/></td>
+          <td class="action-button"><img (click)="saveCompany(newCompany, 'ago', 'depot')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+          <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+        </tr>
+    </tbody>
+      </table>
+
+    </mat-tab>
+
+    <mat-tab label="Tab 2">
+      <ng-template mat-tab-label>
+        <div class="fill" matTooltip="Kerosine prices" (click)="switchDepotView('dpk')">DPK</div>
+      </ng-template>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+        <tr ng-init="DPOOrder='sort_order'">
+          <th class="logo"></th>
+          <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+          <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+          <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+          <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+          <th class="price_change_percent">+/- %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of depotCompanies | async">
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname"><input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font"/></td>
+          <td class="short">{{company.short_name}}</td>
+          <td class="price"><input [(ngModel)]="company.price" type="number" class="form-control transparent-bg white-font"/></td>
+          <td class="action-button"><img (click)="update(company)" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+          <td class="action-button"><img (click)="remove(company)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+        </tr>
+        <tr>
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg"/></td>
+          <td class="short">{{newCompany.short_name}}</td>
+          <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg"/></td>
+          <td class="action-button"><img (click)="saveCompany(newCompany, 'dpk', 'depot')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+          <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+        </tr>
+        </tbody>
+      </table>
+
+    </mat-tab>
+  </mat-tab-group>
+
+
+  <h2>Pump Prices of {{pumpView}}</h2>
+
+  <mat-tab-group class="demo-tab-group">
+    <mat-tab label="Tab 2">
+      <ng-template mat-tab-label>
+        <div class="fill" matTooltip="Petrol prices" (click)="switchPumpView('pms')">PMS</div>
+      </ng-template>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+        <tr ng-init="DPOOrder='sort_order'">
+          <th class="logo"></th>
+          <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+          <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+          <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+          <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+          <th class="price_change_percent">+/- %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of pumpCompanies | async">
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname">{{company.long_name}}</td>
+          <td class="short">{{company.short_name}}</td>
+          <td class="price">{{company.price  | currency : '₦' }}</td>
+          <td class="price_change" >{{ company.change | number:2 | currency : ''}}</td>
+          <td class="price_change_percent" >{{ company.change/company.price*100 | number:2}}%</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </mat-tab>
+    <mat-tab label="Tab 2">
+      <ng-template mat-tab-label>
+        <div class="fill" matTooltip="Diesel prices" (click)="switchPumpView('ago')">AGO</div>
+      </ng-template>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+        <tr ng-init="DPOOrder='sort_order'">
+          <th class="logo"></th>
+          <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+          <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+          <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+          <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+          <th class="price_change_percent">+/- %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of pumpCompanies | async">
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname">{{company.long_name}}</td>
+          <td class="short">{{company.short_name}}</td>
+          <td class="price">{{company.price  | currency : '₦' }}</td>
+          <td class="price_change" >{{ company.change | number:2 | currency : ''}}</td>
+          <td class="price_change_percent" >{{ company.change/company.price*100 | number:2}}%</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </mat-tab>
+
+    <mat-tab label="Tab 2">
+      <ng-template mat-tab-label>
+        <div class="fill" matTooltip="Kerosine prices" (click)="switchPumpView('dpk')">DPK</div>
+      </ng-template>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+        <tr ng-init="DPOOrder='sort_order'">
+          <th class="logo"></th>
+          <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+          <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+          <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+          <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+          <th class="price_change_percent">+/- %</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let company of pumpCompanies | async">
+          <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+          <td class="fullname">{{company.long_name}}</td>
+          <td class="short">{{company.short_name}}</td>
+          <td class="price">{{company.price  | currency : '₦' }}</td>
+          <td class="price_change" >{{ company.change | number:2 | currency : ''}}</td>
+          <td class="price_change_percent" >{{ company.change/company.price*100 | number:2}}%</td>
+        </tr>
+        </tbody>
+      </table>
+
+    </mat-tab>
+  </mat-tab-group>
+<div class="container-fluid">
+  <h2> Oil Company Stocks</h2>
+  <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+    <thead>
+    <tr ng-init="DPOOrder='sort_order'">
+      <th class="logo"></th>
+      <th ng-click="DPOOrder='long_name'" class="fullname"><span><img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory"></span>Company <!-- ngIf: DPOOrder=='long_name' --></th>
+      <th ng-click="DPOOrder='short_name'" class="short"><span><img src="assets/icons/002-folder.svg" class="icon-small" alt="folder"></span>Short  <!-- ngIf: DPOOrder=='short_name' --></th>
+      <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price"><span><img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag"></span>Price <!-- ngIf: DPOOrder=DPO[selectedProduct.DPO][0] --></th>
+      <th class="price_change"><span><img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics"></span>+/- </th>
+      <th class="price_change_percent">+/- %</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let company of pumpCompanies | async">
+      <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
+      <td class="fullname">{{company.long_name}}</td>
+      <td class="short">{{company.short_name}}</td>
+      <td class="price">{{company.price  | currency : '₦' }}</td>
+      <td class="price_change" >{{ company.change | number:2 | currency : ''}}</td>
+      <td class="price_change_percent" >{{ company.change/company.price*100 | number:2}}%</td>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <button (click)="updateTableExtremes()" class="btn btn-secondary">Crunch Table Data</button>
+</div>
+
+</section>
+</div>

@@ -1,0 +1,24 @@
+<div class="container" style="padding-top: 100px">
+  <div class="col-lg-12">
+    <h1>Blog</h1>
+    <hr/>
+
+
+    <div class="row" style="flex-wrap: wrap">
+      <div *ngFor="let post of posts" class="col-lg-3 hover-father">
+        <h2 class="clear-white blog-header"><a [routerLink]="['/blog',post.slug]" class="center-block">{{post.title}}</a></h2>
+        <div class="fixed-height">
+          <p class="show-hover clear-blue blog-small">{{post.excerpt}}</p>
+          <img src="{{post.media}}" style="width: 100%" class="img-responsive semi-transparent hide-hover">
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+
+    <div class="container">
+      <a href="blog/page/{{(currentPage-1)}}" ng-if="(currentPage>1)" class="btn left">Previous</a> <span class="btn center-block">{{currentPage}}</span> <a href="blog/page/{{(currentPage-1+2)}}" ng-if="(posts.length==perPage)" class="btn pull-right">Next</a>
+    </div>
+
+  </div>
+</div>
