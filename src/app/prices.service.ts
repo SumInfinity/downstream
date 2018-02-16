@@ -13,29 +13,29 @@ export class PricesService {
     public rawCompanies: Observable<SnapshotAction[]>;
     public crunched = {
         depot: {
-            average: { ago: { value: 0} , dpk: { value: 0}, pms: { value: 0} },
+            average: { ago: { value: 0 }, dpk: { value: 0 }, pms: { value: 0 } },
             highest: {
-                ago: new Company('') ,
-                dpk: new Company('') ,
+                ago: new Company(''),
+                dpk: new Company(''),
                 pms: new Company('')
             },
             lowest: {
-                ago: new Company('') ,
-                dpk: new Company('') ,
-                pms: new Company('') ,
+                ago: new Company(''),
+                dpk: new Company(''),
+                pms: new Company(''),
             }
         },
         pump: {
-            average: { ago: { value: 54} , dpk: { value: 54}, pms: { value: 54} },
+            average: { ago: { value: 0 }, dpk: { value: 0 }, pms: { value: 0 } },
             highest: {
-                ago: {company: 'emeka Co', value: 44 },
-                dpk: {company: 'emeka Co', value: 54 } ,
-                pms:  {company: 'emeka Co', value: 132 }
+                ago: new Company(''),
+                dpk: new Company(''),
+                pms: new Company('')
             },
             lowest: {
-                ago: {company: 'emeka Co', value: 23 },
-                dpk: {company: 'emeka Co', value: 55 },
-                pms:  {company: 'emeka Co', value: 26 }
+                ago: new Company(''),
+                dpk: new Company(''),
+                pms: new Company(''),
             }
         }
     };
@@ -49,6 +49,12 @@ export class PricesService {
         this.companies = this.depotRef.valueChanges();
         return this.companies;
     }
+
+    getStocks() {
+        const stocksRef = this.db.list('stocks');
+        return stocksRef.valueChanges();
+    }
+
     getPricesWithSnapshot(product: string, place: string) {
         this.depotRef = this.db.list('prices/' + place + '/' + product);
         this.rawCompanies = this.depotRef.snapshotChanges().map(changes => {
@@ -61,8 +67,15 @@ export class PricesService {
         this.createDbRef(company).update(company.key, company);
     }
 
+    updateStock(company: Company) {
+        this.db.list('stocks').update(company.key, company);
+    }
+
     deletePrice(company: Company) {
         this.createDbRef(company).remove(company.key);
+    }
+    deleteStock(company: Company) {
+        this.db.list('stocks').remove(company.key);
     }
 
     createDbRef(company): AngularFireList<any> {
@@ -72,6 +85,18 @@ export class PricesService {
     createPrice(company: Company, product: string, place: string) {
         this.depotRef = this.db.list('prices/' + place + '/' + product);
         this.depotRef.push(company).then((success) => {
+            console.log('company added successfully');
+            console.log(success);
+        }, (error) => {
+            console.log('error adding company');
+            console.log(error);
+        });
+
+    }
+
+    createStock(company: Company) {
+        const stocksRef = this.db.list('stocks');
+        stocksRef.push(company).then((success) => {
             console.log('company added successfully');
             console.log(success);
         }, (error) => {
@@ -90,16 +115,58 @@ export class PricesService {
         return ref.valueChanges();
 
     }
+    saveYesterdaysData() {
+        const ref = this.db.object('updated');
+        ref.update(Date.now());
+        const fullCompanyPricesRef = this.db.object('companies');
+        this.savePricesReturnAverage('pms', 'depot');
+        this.savePricesReturnAverage('ago', 'depot');
+        this.savePricesReturnAverage('dpk', 'depot');
+        this.savePricesReturnAverage('pms', 'pump');
+        this.savePricesReturnAverage('ago', 'pump');
+        this.savePricesReturnAverage('dpk', 'pump');
 
-    crunchedData(): any {
+
+
+
+        this.updateCharts();
+    }
+
+    savePricesReturnAverage(product, place) {
+        this.getPricesWithSnapshot(product, place).subscribe((companies: any[]) => {
+            for (let company of companies) {
+                const companyRef = this.db.object('companies/' + company.short_name + '/' + place + '/' + product + '/' + company.modified_on);
+                companyRef.set(company.price);
+            }
+        });
+    }
+
+    updateCharts() {
+        const chartDataRef = this.db.list('chart/depot/data');
+
+        chartDataRef.push({ data: [65, 59, 80, 81, 56, 55, 40], label: 'Petrol (PMS)' });
+        chartDataRef.push({ data: [28, 48, 40, 19, 86, 27, 90], label: 'Diesel (AGO)' });
+        chartDataRef.push({ data: [18, 48, 77, 9, 100, 27, 40], label: 'Kerosine (DPK)' });
+        const chartLabelsRef = this.db.list('chart/depot/labels');
+
+        chartLabelsRef.push('January');
+        chartLabelsRef.push('February');
+        chartLabelsRef.push('March');
+        chartLabelsRef.push('April');
+        chartLabelsRef.push('May');
+        chartLabelsRef.push('June');
+        chartLabelsRef.push('July');
+    }
+
+    crunchedData() {
         let lowestPrice = 10000;
         let highestPrice = 0;
-        let highest: Company ;
+        let highest: Company;
         let lowest: Company;
         let total = 0;
         let average = 0;
-        const allAGODepot = this.db.list<Company>('prices/depot/ago').valueChanges().subscribe( (prices: Company[]) => {
-            for (const company of prices){
+        const allAGODepot = this.db.list<Company>('prices/depot/ago').valueChanges().subscribe((prices: Company[]) => {
+            for (const company of prices) {
                 console.log(company);
                 if (company.price > highestPrice) {
                     highestPrice = company.price;
@@ -120,8 +187,8 @@ export class PricesService {
             console.log(this.crunched);
             this.updateTableExtremes();
         });
-        const allDPKDepot = this.db.list('prices/depot/dpk').valueChanges().subscribe( (prices: Company[]) => {
-            for (const company of prices){
+        const allDPKDepot = this.db.list('prices/depot/dpk').valueChanges().subscribe((prices: Company[]) => {
+            for (const company of prices) {
                 console.log(company);
                 if (company.price > highestPrice) {
                     highestPrice = company.price;
@@ -143,8 +210,8 @@ export class PricesService {
             this.updateTableExtremes();
 
         });
-        const allPMSDepot = this.db.list('prices/depot/pms').valueChanges().subscribe( (prices: Company[]) => {
-            for (const company of prices){
+        const allPMSDepot = this.db.list('prices/depot/pms').valueChanges().subscribe((prices: Company[]) => {
+            for (const company of prices) {
                 console.log(company);
                 if (company.price > highestPrice) {
                     highestPrice = company.price;

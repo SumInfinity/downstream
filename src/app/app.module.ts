@@ -26,17 +26,21 @@ import { LoginComponent } from './login/login.component';
 import { BlogSingleComponent } from './blog-single/blog-single.component';
 import { SidebarComponent } from './blog/sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditStockComponent } from './edit-stock/edit-stock.component';
+import { PriceAnalysisComponent } from './price-analysis/price-analysis.component';
+import { AuthService } from './auth.service';
+import { AuthGuard } from './auth-guard.service';
 
 const appRoutes: Routes = [
-    { path: '', component: PricesComponent},
-    { path: 'blog', component: BlogComponent},
-    { path: 'about', component: AboutComponent},
-    { path: 'contact', component: ContactComponent},
-    { path: 'login', component: LoginComponent},
-    { path: 'admin', component: EditPricesComponent},
-    { path: 'dashboard', component: DashboardComponent},
-    { path: 'blog/:id', component: BlogSingleComponent},
-
+    { path: '', component: PricesComponent },
+    { path: 'blog', component: BlogComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'contact', component: ContactComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'admin', component: EditPricesComponent },
+    { path: 'edit-stocks', component: EditStockComponent },
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'blog/:id', component: BlogSingleComponent },
 ];
 @NgModule({
     declarations: [
@@ -52,6 +56,8 @@ const appRoutes: Routes = [
         LoginComponent,
         BlogSingleComponent,
         DashboardComponent,
+        EditStockComponent,
+        PriceAnalysisComponent,
     ],
     imports: [
         BrowserModule,
@@ -69,6 +75,8 @@ const appRoutes: Routes = [
         AngularFireAuth,
         WordpressService,
         PricesService,
+        AuthService,
+        AuthGuard,
     ],
     bootstrap: [AppComponent]
 })

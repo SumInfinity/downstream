@@ -11,5 +11,7 @@ export class ContactComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  sendMessage() {
+    console.log("send contact email here");
+  }
 }

@@ -1,0 +1,72 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2> Company Stocks</h2>
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <thead>
+          <tr ng-init="DPOOrder='sort_order'">
+            <th class="logo"></th>
+            <th ng-click="DPOOrder='long_name'" class="fullname">
+              <span>
+                <img src="assets/icons/011-factory-1.svg" class="icon-small" alt="factory">
+              </span>Company
+            </th>
+            <th ng-click="DPOOrder='short_name'" class="short">
+              <span>
+                <img src="assets/icons/002-folder.svg" class="icon-small" alt="folder">
+              </span>Short
+            </th>
+            <th ng-click="DPOOrder=DPO[selectedProduct.DPO][0]" class="price">
+              <span>
+                <img src="assets/icons/003-money-bag.svg" class="icon-small" alt="money bag">
+              </span>Price
+            </th>
+            <th class="price_change">
+              <span>
+                <img src="assets/icons/003-analytics-2.svg" class="icon-small" alt="analytics">
+              </span>+/- </th>
+            <th class="price_change_percent">+/- %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of stockCompanies | async">
+            <td class="logo">
+              <img src="assets/icons/050-factory.svg" class="icon" alt="company logo" />
+            </td>
+            <td class="fullname">
+              <input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font" />
+            </td>
+            <td class="short">{{company.short_name}}</td>
+            <td class="price">
+              <input [(ngModel)]="company.price" type="number" class="form-control transparent-bg white-font" />
+            </td>
+            <td class="action-button">
+              <img (click)="update(company)" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+            <td class="action-button">
+              <img (click)="remove(company)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+          </tr>
+          <tr>
+            <td class="logo">
+              <img src="assets/icons/050-factory.svg" class="icon" alt="company logo" />
+            </td>
+            <td class="fullname">
+              <input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg" />
+            </td>
+            <td class="short">{{newCompany.short_name}}</td>
+            <td class="price">
+              <input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg" />
+            </td>
+            <td class="action-button">
+              <img (click)="saveCompany(newCompany, 'pms', 'depot')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
+            <td class="action-button">
+              <img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
+          </tr>
+
+        </tbody>
+      </table>
+      <div>
+        <button class="btn btn-secondary">Save Stocks</button>
+      </div>
+    </div>
+  </div>
+</div>

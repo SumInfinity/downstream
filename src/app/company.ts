@@ -15,8 +15,9 @@ export class Company {
         this.created_on = Date.now();
         this.modified_on = Date.now();
     }
-    public updated(){
+    public updated() {
         console.log('updating this company from model');
         this.modified_on = Date.now();
     }
+
 }

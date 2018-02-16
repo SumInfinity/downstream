@@ -1,3 +1,21 @@
-<p>
-  login works!
-</p>
+<section class="container centered-content" style="padding-top: 150px">
+  <form>
+    <div class="form-group login rounded semi-transparent">
+      <h3 class="underline">Admin Login</h3>
+      <div class="">
+        <div class="form-group">
+          <span class="glyphicon glyphicon-user"></span>
+          <input class="transparent-bg underline myinput text-center col-lg-6 center-block" (ngModel)="user.email" placeholder="email@domain.com"
+          />
+        </div>
+        <div class="form-group">
+          <span class="glyphicon glyphicon-bookmark"></span>
+          <input class="transparent-bg underline myinput text-center col-lg-6 center-block" (ngModel)="user.password" type="password"
+          />
+        </div>
+        <button class="btn btn-default" (click)="onSignin()">
+          <span class="glyphicon glyphicon-user"></span> Login</button>
+      </div>
+    </div>
+  </form>
+</section>

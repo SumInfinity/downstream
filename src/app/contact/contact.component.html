@@ -1,3 +1,26 @@
-<p>
-  contact works!
-</p>
+<section class="container centered-content" style="padding-top: 150px">
+  <form>
+    <div class="form-group login rounded semi-transparent ">
+      <h3 class="underline">Contact Us</h3>
+      <div class="">
+        <div class="form-group">
+          <span class="glyphicon glyphicon-user"></span>
+          <input class="transparent-bg underline myinput text-center col-lg-6 center-block" ng-model="contact.email"
+            placeholder="email@domain.com" />
+        </div>
+        <div class="form-group">
+          <span class="glyphicon glyphicon-bookmark"></span>
+          <input class="transparent-bg underline myinput text-center col-lg-6 center-block" ng-model="contact.title"
+            placeholder="title of message" />
+        </div>
+        <div class="form-group">
+          <span class="glyphicon glyphicon-pencil"></span>
+          <textarea class="transparent-bg underline myinput col-lg-6 center-block" ng-model="contact.message" placeholder="... write your message"></textarea>
+        </div>
+        <button class="btn btn-default" (click)="sendMessage()">
+          <span class="glyphicon glyphicon-send"></span> Send</button>
+
+      </div>
+    </div>
+  </form>
+</section>

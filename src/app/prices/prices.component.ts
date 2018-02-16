@@ -15,7 +15,7 @@ export class PricesComponent implements OnInit, OnDestroy {
     public crunched: Subscription;
     public crunchedData: any =  {
         depot: {
-            average: { ago: { value: 54} , dpk: { value: 54}, pms: { value: 54} },
+            average: { ago: { value: 0} , dpk: { value: 0}, pms: { value: 0} },
             highest: {
                 ago: new Company('') ,
                 dpk: new Company('') ,
@@ -28,16 +28,16 @@ export class PricesComponent implements OnInit, OnDestroy {
             }
         },
         pump: {
-            average: { ago: { value: 54} , dpk: { value: 54}, pms: { value: 54} },
+            average: { ago: { value: 0} , dpk: { value: 0}, pms: { value: 0} },
             highest: {
-                ago: {company: 'emeka Co', value: 44 },
-                dpk: {company: 'emeka Co', value: 54 } ,
-                pms:  {company: 'emeka Co', value: 132 }
+                ago: new Company('') ,
+                dpk: new Company('') ,
+                pms: new Company('')
             },
             lowest: {
-                ago: {company: 'emeka Co', value: 23 },
-                dpk: {company: 'emeka Co', value: 55 },
-                pms:  {company: 'emeka Co', value: 26 }
+                ago: new Company('') ,
+                dpk: new Company('') ,
+                pms: new Company('') ,
             }
         }
     };

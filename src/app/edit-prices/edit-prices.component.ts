@@ -59,13 +59,16 @@ export class EditPricesComponent implements OnInit, OnDestroy {
     }
 
     confirmTodaysData() {
-
+        this.updateTableExtremes();
+        this.saveYesterdaysData();
     }
 
     updateTableExtremes() {
         this.pricesService.crunchedData();
     }
-
+    saveYesterdaysData() {
+        this.pricesService.saveYesterdaysData();
+    }
     ngOnDestroy() {
 
     }
