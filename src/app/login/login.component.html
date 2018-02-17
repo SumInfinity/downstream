@@ -13,9 +13,24 @@
           <input class="transparent-bg underline myinput text-center col-lg-6 center-block" (ngModel)="user.password" type="password"
           />
         </div>
-        <button class="btn btn-default" (click)="onSignin()">
-          <span class="glyphicon glyphicon-user"></span> Login</button>
+        <div class="form-group">
+          <button (click)="onSigninFacebook()" class="btn btn-primary">
+            Login with facebook
+            <i class=""></i>
+          </button>
+          <button (click)="onSigninGoogle()" class="btn btn-danger">
+            Login with google
+            <i class=""></i>
+          </button>
+          <button (click)="onSigninTwitter()" class="btn btn-secondary">
+            Login with Twitter
+            <i class=""></i>
+          </button>
+        </div>
       </div>
+      <button class="btn btn-default" (click)="onSignin()">
+        <span class="glyphicon glyphicon-user"></span> Login</button>
+
     </div>
   </form>
 </section>

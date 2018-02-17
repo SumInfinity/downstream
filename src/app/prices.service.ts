@@ -6,6 +6,7 @@ import {
 import { Company } from './company';
 import { Observable } from 'rxjs/Observable';
 
+/** all the logic for data storing goes here */
 @Injectable()
 export class PricesService {
     public depotRef: AngularFireList<any>;
@@ -126,9 +127,6 @@ export class PricesService {
         this.savePricesReturnAverage('ago', 'pump');
         this.savePricesReturnAverage('dpk', 'pump');
 
-
-
-
         this.updateCharts();
     }
 
@@ -156,6 +154,12 @@ export class PricesService {
         chartLabelsRef.push('May');
         chartLabelsRef.push('June');
         chartLabelsRef.push('July');
+    }
+    chartData() {
+        return this.db.list('chart/depot/data').valueChanges();
+    }
+    chartLabels() {
+        return this.db.list('chart/depot/labels').valueChanges();
     }
 
     crunchedData() {

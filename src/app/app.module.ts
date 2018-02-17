@@ -30,6 +30,7 @@ import { EditStockComponent } from './edit-stock/edit-stock.component';
 import { PriceAnalysisComponent } from './price-analysis/price-analysis.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
+import * as firebase from 'firebase';
 
 const appRoutes: Routes = [
     { path: '', component: PricesComponent },

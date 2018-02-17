@@ -13,38 +13,38 @@ export class PricesComponent implements OnInit, OnDestroy {
     public depotCompanies: Observable<Company[]>;
     public pumpCompanies: Observable<Company[]>;
     public crunched: Subscription;
-    public crunchedData: any =  {
+    public crunchedData: any = {
         depot: {
-            average: { ago: { value: 0} , dpk: { value: 0}, pms: { value: 0} },
+            average: { ago: { value: 0 }, dpk: { value: 0 }, pms: { value: 0 } },
             highest: {
-                ago: new Company('') ,
-                dpk: new Company('') ,
+                ago: new Company(''),
+                dpk: new Company(''),
                 pms: new Company('')
             },
             lowest: {
-                ago: new Company('') ,
-                dpk: new Company('') ,
-                pms: new Company('') ,
+                ago: new Company(''),
+                dpk: new Company(''),
+                pms: new Company(''),
             }
         },
         pump: {
-            average: { ago: { value: 0} , dpk: { value: 0}, pms: { value: 0} },
+            average: { ago: { value: 0 }, dpk: { value: 0 }, pms: { value: 0 } },
             highest: {
-                ago: new Company('') ,
-                dpk: new Company('') ,
+                ago: new Company(''),
+                dpk: new Company(''),
                 pms: new Company('')
             },
             lowest: {
-                ago: new Company('') ,
-                dpk: new Company('') ,
-                pms: new Company('') ,
+                ago: new Company(''),
+                dpk: new Company(''),
+                pms: new Company(''),
             }
         }
     };
     public lineChartData: Array<any> = [
-        {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-        {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'},
-        {data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C'}
+        { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+        { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+        { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
     ];
     public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
     public lineChartOptions: any = {
@@ -84,8 +84,14 @@ export class PricesComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.depotCompanies = this.pricesService.getPrices('pms', 'depot');
         this.pumpCompanies = this.pricesService.getPrices('pms', 'pump');
-        this.crunched = this.pricesService.getTableExtremes().subscribe( (tableExtremes) => {
+        this.crunched = this.pricesService.getTableExtremes().subscribe((tableExtremes) => {
             this.crunchedData = tableExtremes;
+        });
+        this.pricesService.chartData().subscribe((data) => {
+            this.lineChartData = data;
+        });
+        this.pricesService.chartLabels().subscribe((data) => {
+            this.lineChartLabels = data
         });
     }
 
