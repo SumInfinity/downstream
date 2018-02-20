@@ -48,48 +48,7 @@ export class PricesService {
 
   }
   //+++ PRICES +++ //
-  // get prices as a simple Observable without keys
-  getPrices(product: string, place: string) {
-    this.depotRef = this.db.list('prices/' + place + '/' + product);
-    this.companies = this.depotRef.valueChanges();
-    return this.companies;
-  }
-
-  // get stocks as a simple Observable without keys
-  getStocks() {
-    const stocksRef = this.db.list('stocks');
-    return stocksRef.valueChanges();
-  }
-
-  // get prices with keys and content //
-
-  getPricesWithSnapshot(product: string, place: string) {
-    this.depotRef = this.db.list('prices/' + place + '/' + product);
-    this.rawCompanies = this.depotRef.snapshotChanges().map(changes => {
-      return changes.map(c => ({ key: c.payload.key, product: product, place: place, ...c.payload.val() }));
-    });
-    return this.rawCompanies;
-  }
-
-  updatePrice(company: Company) {
-    this.createDbRef(company).update(company.key, company);
-  }
-
-  updateStock(company: Company) {
-    this.db.list('stocks').update(company.key, company);
-  }
-
-  deletePrice(company: Company) {
-    this.createDbRef(company).remove(company.key);
-  }
-  deleteStock(company: Company) {
-    this.db.list('stocks').remove(company.key);
-  }
-
-  createDbRef(company): AngularFireList<any> {
-    return this.db.list('prices/' + company.place + '/' + company.product);
-  }
-
+  // --create
   createPrice(company: Company, product: string, place: string) {
     this.depotRef = this.db.list('prices/' + place + '/' + product);
     this.depotRef.push(company).then((success) => {
@@ -101,7 +60,33 @@ export class PricesService {
     });
 
   }
+  // get prices as a simple Observable without keys
+  getPrices(product: string, place: string) {
+    this.depotRef = this.db.list('prices/' + place + '/' + product);
+    this.companies = this.depotRef.valueChanges();
+    return this.companies;
+  }
 
+  updatePrice(company: Company) {
+    this.createDbRef(company).update(company.key, company);
+  }
+
+
+  deletePrice(company: Company) {
+    this.createDbRef(company).remove(company.key);
+  }
+
+  getPricesWithSnapshot(product: string, place: string) {
+    this.depotRef = this.db.list('prices/' + place + '/' + product);
+    this.rawCompanies = this.depotRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, product: product, place: place, ...c.payload.val() }));
+    });
+    return this.rawCompanies;
+  }
+// --end prices //
+
+  //+++ STOCKS ++ //
+  // get prices with keys and content //
   createStock(company: Company) {
     const stocksRef = this.db.list('stocks');
     stocksRef.push(company).then((success) => {
@@ -113,6 +98,38 @@ export class PricesService {
     });
 
   }
+
+  // get stocks as a simple Observable without keys
+  getStocks() {
+    const stocksRef = this.db.list('stocks');
+    return stocksRef.valueChanges();
+  }
+  // get stocks with their list keys
+
+  updateStock(company: Company) {
+    this.db.list('stocks').update(company.key, company);
+  }
+
+  deleteStock(company: Company) {
+    this.db.list('stocks').remove(company.key);
+  }
+
+  getStockWithSnapshot() {
+    const stocksRef = this.db.list('stocks');
+    return stocksRef.snapshotChanges().map(changes => {
+      return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
+    });
+  }
+
+  // --end stocks --//
+
+  createDbRef(company): AngularFireList<any> {
+    return this.db.list('prices/' + company.place + '/' + company.product);
+  }
+
+
+
+
   updateTableExtremes() {
     const ref = this.db.object('crunched');
     ref.set(this.crunched);
