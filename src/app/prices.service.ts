@@ -118,8 +118,8 @@ export class PricesService {
   }
   saveYesterdaysData() {
     console.log('saving yesterdays data');
-    // const ref = this.db.object('updated');
-    // ref.set(Date.now());
+    const ref = this.db.object('modified_on');
+    ref.update(Date.now());
     const fullCompanyPricesRef = this.db.object('companies');
     this.savePricesReturnAverage('pms', 'depot');
     this.savePricesReturnAverage('ago', 'depot');
@@ -127,14 +127,13 @@ export class PricesService {
     this.savePricesReturnAverage('pms', 'pump');
     this.savePricesReturnAverage('ago', 'pump');
     this.savePricesReturnAverage('dpk', 'pump');
-
     this.updateCharts();
   }
 
   savePricesReturnAverage(product, place) {
     this.getPricesWithSnapshot(product, place).subscribe((companies: any[]) => {
       for (let company of companies) {
-        const companyRef = this.db.list('companies/' + company.short_name + '/' + company.place + '/' + company.product );
+        const companyRef = this.db.list('companies/' + company.short_name + '/' + company.place + '/' + company.product);
         companyRef.push(company.price);
       }
     });
@@ -164,59 +163,19 @@ export class PricesService {
   }
 
   crunchedData() {
-    /** used for the above table of crunched table extremes */
+    this.updateTableExtreme('ago');
+    this.updateTableExtreme('dpk');
+    this.updateTableExtreme('pms');
+  }
+
+  updateTableExtreme(product: string) {
     let lowestPrice = 10000;
     let highestPrice = 0;
     let highest: Company;
     let lowest: Company;
     let total = 0;
     let average = 0;
-    const allAGODepot = this.db.list<Company>('prices/depot/ago').valueChanges().subscribe((prices: Company[]) => {
-      for (const company of prices) {
-        console.log(company);
-        if (company.price > highestPrice) {
-          highestPrice = company.price;
-          highest = company;
-        }
-        if (company.price < lowestPrice) {
-          lowestPrice = company.price;
-          lowest = company;
-        }
-        if (typeof company.price === 'number') {
-          total += company.price;
-        }
-      }
-      average = (total / prices.length);
-      this.crunched.depot.highest.ago = highest;
-      this.crunched.depot.lowest.ago = lowest;
-      this.crunched.depot.average.ago.value = average;
-      console.log(this.crunched);
-      this.updateTableExtremes();
-    });
-    const allDPKDepot = this.db.list('prices/depot/dpk').valueChanges().subscribe((prices: Company[]) => {
-      for (const company of prices) {
-        console.log(company);
-        if (company.price > highestPrice) {
-          highestPrice = company.price;
-          highest = company;
-        }
-        if (company.price < lowestPrice) {
-          lowestPrice = company.price;
-          lowest = company;
-        }
-        if (typeof company.price === 'number') {
-          total += company.price;
-        }
-      }
-      average = (total / prices.length);
-      this.crunched.depot.highest.dpk = highest;
-      this.crunched.depot.lowest.dpk = lowest;
-      this.crunched.depot.average.dpk.value = average;
-      console.log(this.crunched);
-      this.updateTableExtremes();
-
-    });
-    const allPMSDepot = this.db.list('prices/depot/pms').valueChanges().subscribe((prices: Company[]) => {
+    this.db.list('prices/depot/' + product).valueChanges().subscribe((prices: Company[]) => {
       for (const company of prices) {
         console.log(company);
         if (company.price > highestPrice) {
@@ -236,6 +195,7 @@ export class PricesService {
       this.crunched.depot.lowest.pms = lowest;
       this.crunched.depot.average.pms.value = average;
       console.log(this.crunched);
+      /* this should be done only once when all has been finished */
       this.updateTableExtremes();
     });
   }
