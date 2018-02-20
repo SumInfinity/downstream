@@ -88,10 +88,12 @@ export class PricesComponent implements OnInit, OnDestroy {
             this.crunchedData = tableExtremes;
         });
         this.pricesService.chartData().subscribe((data) => {
+              console.log(data)
             this.lineChartData = data;
         });
         this.pricesService.chartLabels().subscribe((data) => {
-            this.lineChartLabels = data
+          console.log(data);
+            this.lineChartLabels = data;
         });
     }
 
