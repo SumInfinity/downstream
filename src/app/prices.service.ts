@@ -12,6 +12,7 @@ export class PricesService {
   public depotRef: AngularFireList<any>;
   public companies: Observable<any[]>;
   public rawCompanies: Observable<SnapshotAction[]>;
+  public productAverages: any = { ago: 0, dpk: 0, pms: 0 };
   public crunched = {
     depot: {
       average: { ago: { value: 0 }, dpk: { value: 0 }, pms: { value: 0 } },
@@ -41,20 +42,26 @@ export class PricesService {
     }
   };
 
+
+
   constructor(private db: AngularFireDatabase) {
 
   }
-
+  //+++ PRICES +++ //
+  // get prices as a simple Observable without keys
   getPrices(product: string, place: string) {
     this.depotRef = this.db.list('prices/' + place + '/' + product);
     this.companies = this.depotRef.valueChanges();
     return this.companies;
   }
 
+  // get stocks as a simple Observable without keys
   getStocks() {
     const stocksRef = this.db.list('stocks');
     return stocksRef.valueChanges();
   }
+
+  // get prices with keys and content //
 
   getPricesWithSnapshot(product: string, place: string) {
     this.depotRef = this.db.list('prices/' + place + '/' + product);
@@ -127,7 +134,6 @@ export class PricesService {
     this.savePricesReturnAverage('pms', 'pump');
     this.savePricesReturnAverage('ago', 'pump');
     this.savePricesReturnAverage('dpk', 'pump');
-    this.updateCharts();
   }
 
   savePricesReturnAverage(product, place) {
@@ -139,22 +145,14 @@ export class PricesService {
     });
   }
 
-  updateCharts() {
-    const chartDataRef = this.db.list('chart/depot/data');
-    //for each of the dates add the average price for each product
-    chartDataRef.push({ data: [65, 59, 80, 81, 56, 55, 40], label: 'Petrol (PMS)' });
-    chartDataRef.push({ data: [28, 48, 40, 19, 86, 27, 90], label: 'Diesel (AGO)' });
-    chartDataRef.push({ data: [18, 48, 77, 9, 100, 27, 40], label: 'Kerosine (DPK)' });
-    const chartLabelsRef = this.db.list('chart/depot/labels');
 
-    chartLabelsRef.push('January');
-    chartLabelsRef.push('February');
-    chartLabelsRef.push('March');
-    chartLabelsRef.push('April');
-    chartLabelsRef.push('May');
-    chartLabelsRef.push('June');
-    chartLabelsRef.push('July');
+  pushNewChartData(ago: number, pms: number, dpk: number) {
+    const chartDataPMSRef = this.db.list('chart/depot/data/-L5n81epOYVnit9h6yj1/data').push(pms);
+    const chartDataAGORef = this.db.list('chart/depot/data/-L5n81euC0Z5-9RaL_s-/data').push(ago);
+    const chartDataDPKRef = this.db.list('chart/depot/data/-L5n81ewHRgbq1ajSQRh/data').push(dpk);
+    const chartLabelsRef = this.db.list('chart/depot/labels').push(Date.now());
   }
+
   chartData() {
     return this.db.list('chart/depot/data').valueChanges();
   }
@@ -165,10 +163,10 @@ export class PricesService {
   crunchedData() {
     this.updateTableExtreme('ago');
     this.updateTableExtreme('dpk');
-    this.updateTableExtreme('pms');
+    this.updateTableExtreme('pms', true);
   }
 
-  updateTableExtreme(product: string) {
+  updateTableExtreme(product: string, last?: boolean) {
     let lowestPrice = 10000;
     let highestPrice = 0;
     let highest: Company;
@@ -194,9 +192,13 @@ export class PricesService {
       this.crunched.depot.highest.pms = highest;
       this.crunched.depot.lowest.pms = lowest;
       this.crunched.depot.average.pms.value = average;
-      console.log(this.crunched);
+      this.productAverages[product] = average;
+      console.log(this.productAverages);
       /* this should be done only once when all has been finished */
-      this.updateTableExtremes();
+      if (last) {
+        this.updateTableExtremes();
+        this.pushNewChartData(this.productAverages.ago, this.productAverages.pms, this.productAverages.dpk);
+      }
     });
   }
 }
