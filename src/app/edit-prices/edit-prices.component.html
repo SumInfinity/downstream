@@ -146,7 +146,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let company of depotCompanies | async">
+            <tr *ngFor="let company of pumpCompanies | async">
               <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
               <td class="fullname"><input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font" /></td>
               <td class="short">{{company.short_name}}</td>
@@ -186,7 +186,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let company of depotCompanies | async">
+            <tr *ngFor="let company of pumpCompanies | async">
               <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
               <td class="fullname"><input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font" /></td>
               <td class="short">{{company.short_name}}</td>
@@ -250,7 +250,7 @@
     </mat-tab-group>
     <div class="container-fluid">
       <h2> Oil Company Stocks</h2>
-      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+      <!-- <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
         <thead>
           <tr ng-init="DPOOrder='sort_order'">
             <th class="logo"></th>
@@ -284,7 +284,7 @@
 
         </tbody>
       </table>
-
+ -->
 
       <button (click)="confirmTodaysData()" class="btn btn-secondary">Crunch Table Data</button>
     </div>
