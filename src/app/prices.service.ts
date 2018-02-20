@@ -12,6 +12,7 @@ export class PricesService {
   public depotRef: AngularFireList<any>;
   public companies: Observable<any[]>;
   public rawCompanies: Observable<SnapshotAction[]>;
+  public rawStocks: Observable<SnapshotAction[]>;
   public productAverages: any = { ago: 0, dpk: 0, pms: 0 };
   public crunched = {
     depot: {
@@ -83,7 +84,7 @@ export class PricesService {
     });
     return this.rawCompanies;
   }
-// --end prices //
+  // --end prices //
 
   //+++ STOCKS ++ //
   // get prices with keys and content //
@@ -116,9 +117,10 @@ export class PricesService {
 
   getStockWithSnapshot() {
     const stocksRef = this.db.list('stocks');
-    return stocksRef.snapshotChanges().map(changes => {
+    this.rawStocks = stocksRef.snapshotChanges().map(changes => {
       return changes.map(c => ({ key: c.payload.key, ...c.payload.val() }));
     });
+    return this.rawStocks;
   }
 
   // --end stocks --//
