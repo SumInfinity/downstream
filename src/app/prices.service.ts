@@ -134,8 +134,8 @@ export class PricesService {
   savePricesReturnAverage(product, place) {
     this.getPricesWithSnapshot(product, place).subscribe((companies: any[]) => {
       for (let company of companies) {
-        const companyRef = this.db.object('companies/' + company.short_name + '/' + place + '/' + product + '/' + company.modified_on);
-        companyRef.set(company.price);
+        const companyRef = this.db.list('companies/' + company.short_name + '/' + company.place + '/' + company.product );
+        companyRef.push(company.price);
       }
     });
   }
