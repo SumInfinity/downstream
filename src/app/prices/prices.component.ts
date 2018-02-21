@@ -88,17 +88,23 @@ export class PricesComponent implements OnInit, OnDestroy {
       this.crunchedData = tableExtremes;
     });
 
-    this.lineChartData = this.pricesService.chartDataValue();
-    this.lineChartLabels = this.pricesService.chartLabelsValue();
+    this.pricesService.chartDataValue().subscribe((data) => {
+      this.lineChartData = data;
+    });
+    this.pricesService.chartLabelsValue().subscribe((labels) => {
+      this.lineChartLabels = labels;
+    });
   }
 
   switchDepotView(product: string) {
     console.log('switching depot view  to ' + product);
+    console.log(this.lineChartData);
     this.depotCompanies = this.pricesService.getPrices(product, 'depot');
   }
 
   switchPumpView(product: string) {
     console.log('switching pump view');
+
     this.pumpCompanies = this.pricesService.getPrices(product, 'pump');
   }
 
