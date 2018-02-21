@@ -42,6 +42,12 @@ export class PricesService {
       }
     }
   };
+  public lineChartData: Array<any> = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
+    { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
+  ];
+  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
 
 
@@ -145,7 +151,7 @@ export class PricesService {
   saveYesterdaysData() {
     console.log('saving yesterdays data');
     const ref = this.db.object('modified_on');
-    ref.update(Date.now());
+    ref.set(Date.now());
     const fullCompanyPricesRef = this.db.object('companies');
     this.savePricesReturnAverage('pms', 'depot');
     this.savePricesReturnAverage('ago', 'depot');
@@ -165,11 +171,22 @@ export class PricesService {
   }
 
 
-  pushNewChartData(ago: number, pms: number, dpk: number) {
-    const chartDataPMSRef = this.db.list('chart/depot/data/-L5n81epOYVnit9h6yj1/data').push(pms);
-    const chartDataAGORef = this.db.list('chart/depot/data/-L5n81euC0Z5-9RaL_s-/data').push(ago);
-    const chartDataDPKRef = this.db.list('chart/depot/data/-L5n81ewHRgbq1ajSQRh/data').push(dpk);
-    const chartLabelsRef = this.db.list('chart/depot/labels').push(Date.now());
+  pushNewChartData(value: number, product: string) {
+    /* the next phase is to retrieve this list as a list
+    and not an object */
+    switch (product) {
+      case 'ago':
+        const chartDataAGORef = this.db.list('chart/depot/data/-L5n81euC0Z5-9RaL_s-/data').push(value);
+        break;
+
+      case 'pms':
+        const chartDataPMSRef = this.db.list('chart/depot/data/-L5n81epOYVnit9h6yj1/data').push(value);
+        break;
+
+      case 'dpk':
+        const chartDataDPKRef = this.db.list('chart/depot/data/-L5n81ewHRgbq1ajSQRh/data').push(value);
+        break;
+    }
   }
 
   chartData() {
@@ -208,15 +225,14 @@ export class PricesService {
         }
       }
       average = (total / prices.length);
-      this.crunched.depot.highest.pms = highest;
-      this.crunched.depot.lowest.pms = lowest;
-      this.crunched.depot.average.pms.value = average;
-      this.productAverages[product] = average;
-      console.log(this.productAverages);
+      this.crunched.depot.highest[product] = highest;
+      this.crunched.depot.lowest[product] = lowest;
+      this.crunched.depot.average[product].value = average;
       /* this should be done only once when all has been finished */
+      this.updateTableExtremes();
+      this.pushNewChartData(average, product);
       if (last) {
-        this.updateTableExtremes();
-        this.pushNewChartData(this.productAverages.ago, this.productAverages.pms, this.productAverages.dpk);
+        const chartLabelsRef = this.db.list('chart/depot/labels').push(Date.now());
       }
     });
   }
