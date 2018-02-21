@@ -5,6 +5,7 @@ import {
 } from 'angularfire2/database';
 import { Company } from './company';
 import { Observable } from 'rxjs/Observable';
+import { Subject } from "rxjs/Subject";
 
 /** all the logic for data storing goes here */
 @Injectable()
@@ -42,6 +43,9 @@ export class PricesService {
       }
     }
   };
+  public lineChartDataSubject: Subject<any> = new Subject();
+  public lineChartLabelsSubject: Subject<any> = new Subject();
+
   public lineChartData: Array<any> = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
     { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
@@ -49,10 +53,12 @@ export class PricesService {
   ];
   public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
+  private chartDataAGORef = this.db.list('chart/depot/data/-L5n81euC0Z5-9RaL_s-/data');
+  private chartDataPMSRef = this.db.list('chart/depot/data/-L5n81epOYVnit9h6yj1/data');
+  private chartDataDPKRef = this.db.list('chart/depot/data/-L5n81ewHRgbq1ajSQRh/data');
 
 
   constructor(private db: AngularFireDatabase) {
-
   }
   //+++ PRICES +++ //
   // --create
@@ -176,24 +182,54 @@ export class PricesService {
     and not an object */
     switch (product) {
       case 'ago':
-        const chartDataAGORef = this.db.list('chart/depot/data/-L5n81euC0Z5-9RaL_s-/data').push(value);
+        this.chartDataAGORef.push(value);
         break;
 
       case 'pms':
-        const chartDataPMSRef = this.db.list('chart/depot/data/-L5n81epOYVnit9h6yj1/data').push(value);
+        this.chartDataPMSRef.push(value);
         break;
 
       case 'dpk':
-        const chartDataDPKRef = this.db.list('chart/depot/data/-L5n81ewHRgbq1ajSQRh/data').push(value);
+        this.chartDataDPKRef.push(value);
         break;
     }
   }
-
-  chartData() {
-    return this.db.list('chart/depot/data').valueChanges();
+  //++ CHARTS ++ //
+  chartDataValue() {
+    this.getChartData();
+    return this.lineChartDataSubject;
   }
-  chartLabels() {
-    return this.db.list('chart/depot/labels').valueChanges();
+  chartLabelsValue() {
+    this.getChartLabels();
+    return this.lineChartLabelsSubject;
+  }
+
+  getChartData() {
+    return this.db.list('chart/depot/data').valueChanges().subscribe((data) => {
+      this.lineChartData = data;
+      this.getChartValues();
+    });
+  }
+  getChartLabels() {
+    return this.db.list('chart/depot/labels').valueChanges().subscribe((labels) => {
+      this.lineChartLabels = labels;
+      this.lineChartLabelsSubject.next(this.lineChartLabels);
+    });
+  }
+
+  getChartValues() {
+    this.chartDataPMSRef.valueChanges().subscribe((dataList) => {
+      this.lineChartData[0].data = dataList;
+      this.lineChartDataSubject.next(this.lineChartData);
+    });
+    this.chartDataAGORef.valueChanges().subscribe((dataList) => {
+      this.lineChartData[1].data = dataList;
+      this.lineChartDataSubject.next(this.lineChartData);
+    });
+    this.chartDataDPKRef.valueChanges().subscribe((dataList) => {
+      this.lineChartData[2].data = dataList;
+      this.lineChartDataSubject.next(this.lineChartData);
+    });
   }
 
   crunchedData() {
