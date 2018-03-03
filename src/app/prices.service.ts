@@ -47,9 +47,9 @@ export class PricesService {
   public lineChartLabelsSubject: Subject<any> = new Subject();
 
   public lineChartData: Array<any> = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-    { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Petrol (PMS)' },
+    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Diesel (AGO)' },
+    { data: [18, 48, 77, 9, 100, 27, 40], label: 'Kerosine (DPK)' }
   ];
   public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
@@ -204,20 +204,16 @@ export class PricesService {
     return this.lineChartLabelsSubject;
   }
 
-  getChartData() {
-    return this.db.list('chart/depot/data').valueChanges().subscribe((data) => {
-      this.lineChartData = data;
-      this.getChartValues();
-    });
-  }
   getChartLabels() {
     return this.db.list('chart/depot/labels').valueChanges().subscribe((labels) => {
       this.lineChartLabels = labels;
+      console.log('labels have been updated');
+      console.log(labels);
       this.lineChartLabelsSubject.next(this.lineChartLabels);
     });
   }
 
-  getChartValues() {
+  getChartData() {
     this.chartDataPMSRef.valueChanges().subscribe((dataList) => {
       this.lineChartData[0].data = dataList;
       this.lineChartDataSubject.next(this.lineChartData);

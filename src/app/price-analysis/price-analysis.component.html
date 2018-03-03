@@ -1,3 +1,66 @@
-<p>
-  price-analysis works!
-</p>
+<div ng-view="" class="row ng-scope" id="container">
+  <section class="col-md-8 ng-scope" style="margin-top: 150px">
+
+    <h3 class="text-center blue ng-binding">July Average Price </h3>
+    <div class="table-wrapper">
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <tbody>
+          <tr>
+            <td>AGO</td>
+            <td>N145,283</td>
+          </tr>
+          <tr>
+            <td>DPK</td>
+            <td>N234,203</td>
+          </tr>
+          <tr>
+            <td>PMS</td>
+            <td>N23,029</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <h3 class="text-center blue">July Depot Activities</h3>
+    <div class="table-wrapper">
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <tbody>
+          <tr>
+            <td>AGO</td>
+            <td>29</td>
+          </tr>
+          <tr>
+            <td>DPK</td>
+            <td>155</td>
+          </tr>
+          <tr>
+            <td>PMS</td>
+            <td>196</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <h3 class="text-center blue">Lowest Price</h3>
+    <div class="table-wrapper">
+      <table class="table table-condensed text-center white-font data-table" style="margin-top: 30px;">
+        <tbody>
+          <tr>
+            <td>AGO</td>
+            <td>{{ crunchedData.depot.lowest.ago.long_name }}</td>
+            <td>{{ crunchedData.depot.lowest.ago.price }}</td>
+          </tr>
+          <tr>
+            <td>DPK</td>
+            <td>{{ crunchedData.depot.lowest.dpk.long_name }}</td>
+            <td>{{ crunchedData.depot.lowest.dpk.price }}</td>
+          </tr>
+          <tr>
+            <td>PMS</td>
+            <td>{{ crunchedData.depot.lowest.pms.long_name }}</td>
+            <td>{{ crunchedData.depot.lowest.pms.price }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

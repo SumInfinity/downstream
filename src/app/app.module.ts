@@ -42,6 +42,7 @@ const appRoutes: Routes = [
     { path: 'edit-stocks', component: EditStockComponent },
     { path: 'dashboard', component: DashboardComponent },
     { path: 'blog/:id', component: BlogSingleComponent },
+    { path: 'price-analysis', component: PriceAnalysisComponent },
 ];
 @NgModule({
     declarations: [
