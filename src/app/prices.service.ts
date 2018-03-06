@@ -145,7 +145,9 @@ export class PricesService implements OnDestroy {
     return this.db.list('prices/' + company.place + '/' + company.product);
   }
 
-
+  getSingleCompany(companyId: string): AngularFireList<any> {
+    return this.db.list('companies/' + companyId);
+  }
 
 
   updateTableExtremes() {
