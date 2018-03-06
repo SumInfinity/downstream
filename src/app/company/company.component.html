@@ -1,0 +1,51 @@
+<h1>{{company.long_name}}</h1>
+<!--<img src="images/total-logo-819x1024.png" class="center-block company" alt="company logo">-->
+<!-- <div google-chart chart="chart">
+</div> -->
+<h1> Depot Oil Prices</h1>
+
+<div class="table-wrapper">
+  <table id="depot_table_company" class="table table-condensed text-center white-font" style="margin-top: 30px;">
+    <thead>
+      <tr>
+        <th>DATE</th>
+        <th>AGO</th>
+        <th class="red">DPK</th>
+        <th class="blue">PMS</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr ng-repeat="(key, price) in DEPOT">
+        <td>{{(company.time_now - (key * 86400))*1000 | date:'MM/dd/yyyy' }}</td>
+        <td>{{price[0]}}</td>
+        <td class="red">{{price[1]}}</td>
+        <td class="blue">{{price[2]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h1> Pump Prices </h1>
+
+<div class="table-wrapper">
+  <table id="pump_table_company" class="table table-condensed text-center white-font" style="margin-top: 30px;">
+    <thead>
+      <tr>
+        <th>DATE</th>
+        <th>AGO</th>
+        <th class="red">DPK</th>
+        <th class="blue">PMS</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr ng-repeat="(key, price) in PUMP">
+        <td>{{(company.time_now - (key * 86400))*1000 | date:'MM/dd/yyyy' }}</td>
+        <td>{{price[0]}}</td>
+        <td class="red">{{price[1]}}</td>
+        <td class="blue">{{price[2]}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

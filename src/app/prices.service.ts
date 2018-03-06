@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   AngularFireAction, AngularFireDatabase, AngularFireList, DatabaseSnapshot,
   SnapshotAction
@@ -9,7 +9,11 @@ import { Subject } from "rxjs/Subject";
 
 /** all the logic for data storing goes here */
 @Injectable()
-export class PricesService {
+export class PricesService implements OnDestroy {
+  ngOnDestroy(): void {
+    this.lineChartDataSubject.unsubscribe();
+    this.lineChartLabelsSubject.unsubscribe();
+  }
   public depotRef: AngularFireList<any>;
   public companies: Observable<any[]>;
   public rawCompanies: Observable<SnapshotAction[]>;

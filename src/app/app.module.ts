@@ -31,6 +31,8 @@ import { PriceAnalysisComponent } from './price-analysis/price-analysis.componen
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth-guard.service';
 import * as firebase from 'firebase';
+import { CompanyComponent } from './company/company.component';
+import { SuggestedPricesComponent } from './suggested-prices/suggested-prices.component';
 
 const appRoutes: Routes = [
     { path: '', component: PricesComponent },
@@ -60,6 +62,8 @@ const appRoutes: Routes = [
         DashboardComponent,
         EditStockComponent,
         PriceAnalysisComponent,
+        CompanyComponent,
+        SuggestedPricesComponent,
     ],
     imports: [
         BrowserModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PricesService } from "../prices.service";
 
 @Component({
   selector: 'app-price-analysis',
@@ -6,8 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./price-analysis.component.css']
 })
 export class PriceAnalysisComponent implements OnInit {
-
-  constructor() { }
+  public $month = 'July';
+  
+  constructor(private pricesService: PricesService) { }
 
   ngOnInit() {
   }

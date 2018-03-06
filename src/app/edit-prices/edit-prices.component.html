@@ -72,7 +72,7 @@
             <tr>
               <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
               <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg" /></td>
-              <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
+              <td class="short"><input [(ngModel)]="newCompany.short_name" class="form-control transparent-bg white-font" /></td>
               <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg" /></td>
               <td class="action-button"><img (click)="saveCompany(newCompany, 'ago', 'depot')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
               <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
@@ -112,7 +112,7 @@
             <tr>
               <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
               <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg" /></td>
-              <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
+              <td class="short"><input [(ngModel)]="newCompany.short_name" class="form-control transparent-bg white-font" /></td>
               <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg" /></td>
               <td class="action-button"><img (click)="saveCompany(newCompany, 'dpk', 'depot')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
               <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
@@ -157,7 +157,7 @@
             <tr>
               <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
               <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg" /></td>
-              <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
+              <td class="short"><input [(ngModel)]="newCompany.short_name" class="form-control transparent-bg white-font" /></td>
               <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg" /></td>
               <td class="action-button"><img (click)="saveCompany(newCompany, 'pms', 'pump')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
               <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
@@ -197,7 +197,7 @@
             <tr>
               <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
               <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg" /></td>
-              <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
+              <td class="short"><input [(ngModel)]="newCompany.short_name" class="form-control transparent-bg white-font" /></td>
               <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg" /></td>
               <td class="action-button"><img (click)="saveCompany(newCompany, 'ago', 'pump')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
               <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
@@ -238,7 +238,7 @@
               <tr>
                 <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
                 <td class="fullname"><input [(ngModel)]="newCompany.long_name" class="form-control transparent-bg" /></td>
-                <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
+                <td class="short"><input [(ngModel)]="newCompany.short_name" class="form-control transparent-bg white-font" /></td>
                 <td class="price"><input [(ngModel)]="newCompany.price" type="number" class="form-control transparent-bg" /></td>
                 <td class="action-button"><img (click)="saveCompany(newCompany, 'dpk', 'pump')" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
                 <td class="action-button"><img (click)="emptyObject(newCompany)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
@@ -268,7 +268,7 @@
           <tr *ngFor="let company of stockCompanies | async">
             <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
             <td class="fullname"><input [(ngModel)]="company.long_name" class="form-control transparent-bg white-font" /></td>
-            <td class="short">{{company.short_name}}</td>
+            <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
             <td class="price"><input [(ngModel)]="company.price" type="number" class="form-control transparent-bg white-font" /></td>
             <td class="action-button"><img (click)="updateStock(company)" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
             <td class="action-button"><img (click)="removeStock(company)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
@@ -276,7 +276,7 @@
           <tr>
             <td class="logo"><img src="assets/icons/050-factory.svg" class="icon" alt="company logo" /></td>
             <td class="fullname"><input [(ngModel)]="newStock.long_name" class="form-control transparent-bg" /></td>
-            <td class="short"><input [(ngModel)]="company.short_name" class="form-control transparent-bg white-font" /></td>
+            <td class="short"><input [(ngModel)]="newStock.short_name" class="form-control transparent-bg white-font" /></td>
             <td class="price"><input [(ngModel)]="newStock.price" type="number" class="form-control transparent-bg" /></td>
             <td class="action-button"><img (click)="saveStock(newStock)" src="assets/icons/003-folder.svg" class="icon img-responsive"> </td>
             <td class="action-button"><img (click)="emptyObject(newStock)" src="assets/icons/015-x-button.svg" class="icon img-responsive">
