@@ -17,7 +17,7 @@
     <hr/>
 
     <div class="container">
-      <a href="blog/page/{{(currentPage-1)}}" ng-if="(currentPage>1)" class="btn left">Previous</a> <span class="btn center-block">{{currentPage}}</span> <a href="blog/page/{{(currentPage-1+2)}}" ng-if="(posts.length==perPage)" class="btn pull-right">Next</a>
+      <a routerLink="blog/page/{{(currentPage-1)}}" *ngIf="(currentPage>1)" class="btn left">Previous</a> <span class="btn center-block">{{currentPage}}</span> <a routerLink="blog/page/{{(currentPage-1+2)}}" *ngIf="(posts.length==perPage)" class="btn pull-right">Next</a>
     </div>
 
   </div>
