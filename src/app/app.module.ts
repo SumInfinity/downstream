@@ -37,6 +37,7 @@ import { SuggestedPricesComponent } from './suggested-prices/suggested-prices.co
 const appRoutes: Routes = [
     { path: '', component: PricesComponent },
     { path: 'blog', component: BlogComponent },
+    { path: 'blog/page/:pageId', component: BlogComponent },
     { path: 'about', component: AboutComponent },
     { path: 'contact', component: ContactComponent },
     { path: 'login', component: LoginComponent },
